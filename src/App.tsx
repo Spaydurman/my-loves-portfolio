@@ -56,7 +56,9 @@ function Hero() {
   const titleX = useTransform(smoothX, [-1, 1], [-8, 8])
   const titleY = useTransform(smoothY, [-1, 1], [-5, 5])
   const galleryX = useTransform(smoothX, [-1, 1], [-14, 14])
-  const galleryY = useTransform(smoothY, [-1, 1], [-10, 10])
+  const galleryY = useTransform(smoothY, [-1, 1], [-18, 18])
+  const galleryRotateX = useTransform(smoothY, [-1, 1], [8, -8])
+  const galleryRotateY = useTransform(smoothX, [-1, 1], [-8, 8])
   const portraitX = useTransform(smoothX, [-1, 1], [-20, 20])
   const portraitY = useTransform(smoothY, [-1, 1], [-12, 12])
   const shineX = useTransform(smoothX, [-1, 1], [20, 80])
@@ -88,17 +90,20 @@ function Hero() {
 
       const beta = shortestAngle(initialBeta, event.beta)
       const gamma = shortestAngle(initialGamma, event.gamma)
-      const screenAngle = window.screen.orientation?.angle ?? 0
+      const screenAngle = ((window.screen.orientation?.angle ?? 0) + 360) % 360
 
       if (screenAngle === 90) {
-        pointerX.set(clamp(beta / 25))
-        pointerY.set(clamp(-gamma / 25))
+        pointerX.set(clamp(beta / 18))
+        pointerY.set(clamp(-gamma / 18))
       } else if (screenAngle === 270) {
-        pointerX.set(clamp(-beta / 25))
-        pointerY.set(clamp(gamma / 25))
+        pointerX.set(clamp(-beta / 18))
+        pointerY.set(clamp(gamma / 18))
+      } else if (screenAngle === 180) {
+        pointerX.set(clamp(-gamma / 18))
+        pointerY.set(clamp(-beta / 18))
       } else {
-        pointerX.set(clamp(gamma / 25))
-        pointerY.set(clamp(beta / 25))
+        pointerX.set(clamp(gamma / 18))
+        pointerY.set(clamp(beta / 18))
       }
     }
 
@@ -199,7 +204,17 @@ function Hero() {
         <motion.div
           className="absolute top-[40.7%] left-0 z-[1] grid h-[54%] w-full grid-cols-5 gap-[clamp(0.5rem,1.1vw,0.85rem)] p-2 max-sm:top-[36%] max-sm:h-[34%] max-sm:grid-cols-4 max-sm:gap-[0.35rem]"
           aria-hidden="true"
-          style={prefersReducedMotion ? undefined : { x: galleryX, y: galleryY, z: -30 }}
+          style={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  x: galleryX,
+                  y: galleryY,
+                  z: -30,
+                  rotateX: galleryRotateX,
+                  rotateY: galleryRotateY,
+                }
+          }
         >
           {galleryImages.map(({ src, className }) => (
             <img
