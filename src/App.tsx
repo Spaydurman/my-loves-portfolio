@@ -53,14 +53,18 @@ function Hero() {
 
   const rotateX = useTransform(smoothY, [-1, 1], [4.5, -4.5])
   const rotateY = useTransform(smoothX, [-1, 1], [-6, 6])
-  const titleX = useTransform(smoothX, [-1, 1], [-8, 8])
-  const titleY = useTransform(smoothY, [-1, 1], [-5, 5])
+  const titleX = useTransform(smoothX, [-1, 1], [-12, 12])
+  const titleY = useTransform(smoothY, [-1, 1], [-10, 10])
+  const titleRotateX = useTransform(smoothY, [-1, 1], [5, -5])
+  const titleRotateY = useTransform(smoothX, [-1, 1], [-5, 5])
   const galleryX = useTransform(smoothX, [-1, 1], [-14, 14])
   const galleryY = useTransform(smoothY, [-1, 1], [-18, 18])
   const galleryRotateX = useTransform(smoothY, [-1, 1], [8, -8])
   const galleryRotateY = useTransform(smoothX, [-1, 1], [-8, 8])
-  const portraitX = useTransform(smoothX, [-1, 1], [-20, 20])
-  const portraitY = useTransform(smoothY, [-1, 1], [-12, 12])
+  const portraitX = useTransform(smoothX, [-1, 1], [-24, 24])
+  const portraitY = useTransform(smoothY, [-1, 1], [-22, 22])
+  const portraitRotateX = useTransform(smoothY, [-1, 1], [7, -7])
+  const portraitRotateY = useTransform(smoothX, [-1, 1], [-7, 7])
   const shineX = useTransform(smoothX, [-1, 1], [20, 80])
   const shineY = useTransform(smoothY, [-1, 1], [20, 80])
   const shine = useMotionTemplate`radial-gradient(circle at ${shineX}% ${shineY}%, rgb(255 255 255 / 0.3), transparent 32%)`
@@ -167,7 +171,17 @@ function Hero() {
         {/* Foreground: hero picture */}
         <motion.div
           className="pointer-events-none absolute inset-0 z-[3] [transform-style:preserve-3d]"
-          style={prefersReducedMotion ? undefined : { x: portraitX, y: portraitY, z: 75 }}
+          style={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  x: portraitX,
+                  y: portraitY,
+                  z: 75,
+                  rotateX: portraitRotateX,
+                  rotateY: portraitRotateY,
+                }
+          }
         >
           <div className="absolute bottom-[-0.2%] left-1/2 h-[74.8%] w-fit -translate-x-1/2 max-sm:h-[63%] max-sm:max-w-[92vw]">
             <img
@@ -187,7 +201,17 @@ function Hero() {
         {/* Middle layer: text */}
         <motion.div
           className="pointer-events-none absolute inset-0 z-[2] [transform-style:preserve-3d]"
-          style={prefersReducedMotion ? undefined : { x: titleX, y: titleY, z: 15 }}
+          style={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  x: titleX,
+                  y: titleY,
+                  z: 15,
+                  rotateX: titleRotateX,
+                  rotateY: titleRotateY,
+                }
+          }
         >
           <div className="absolute top-[13.8%] left-1/2 w-max -translate-x-1/2 max-sm:top-[12%]">
             <h1
