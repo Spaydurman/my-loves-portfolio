@@ -16,15 +16,15 @@ const galleryImages = [
   },
   {
     src: '/hero-images/image (2).png',
-    className: 'col-start-2 object-[50%_57%]',
+    className: 'col-start-2 object-[50%_57%] max-sm:col-start-auto',
   },
   {
     src: '/hero-images/image (4).png',
-    className: 'col-start-4 object-[50%_50%]',
+    className: 'col-start-4 object-[50%_50%] max-sm:col-start-auto',
   },
   {
     src: '/hero-images/image (3).png',
-    className: 'col-start-5 object-[50%_61%]',
+    className: 'col-start-5 object-[50%_61%] max-sm:col-start-auto',
   },
 ]
 
@@ -55,8 +55,8 @@ function Hero() {
   const rotateY = useTransform(smoothX, [-1, 1], [-6, 6])
   const titleX = useTransform(smoothX, [-1, 1], [-8, 8])
   const titleY = useTransform(smoothY, [-1, 1], [-5, 5])
-  const galleryX = useTransform(smoothX, [-1, 1], [-4, 4])
-  const galleryY = useTransform(smoothY, [-1, 1], [-3, 3])
+  const galleryX = useTransform(smoothX, [-1, 1], [-14, 14])
+  const galleryY = useTransform(smoothY, [-1, 1], [-10, 10])
   const portraitX = useTransform(smoothX, [-1, 1], [-20, 20])
   const portraitY = useTransform(smoothY, [-1, 1], [-12, 12])
   const shineX = useTransform(smoothX, [-1, 1], [20, 80])
@@ -187,16 +187,17 @@ function Hero() {
           <div className="absolute top-[13.8%] left-1/2 w-max -translate-x-1/2 max-sm:top-[12%]">
             <h1
               id="hero-title"
-              className="m-0 whitespace-nowrap text-[clamp(7rem,21.1vw,22rem)] leading-[0.78] font-normal tracking-[0] text-[#f4f4f4] [font-family:Impact,Haettenschweiler,'Arial_Narrow_Bold',sans-serif] max-sm:text-[22vw] max-sm:leading-[0.84]"
+              className="hero-title m-0 whitespace-nowrap text-[clamp(7rem,21.1vw,22rem)] leading-[0.78] font-normal tracking-[0] text-[#f4f4f4] max-sm:text-center max-sm:text-[28vw] max-sm:leading-[0.78]"
             >
-              NIKKA ELLA
+              <span>NIKKA</span>{' '}
+              <span className="max-sm:block">ELLA</span>
             </h1>
           </div>
         </motion.div>
 
         {/* Background: four pictures */}
         <motion.div
-          className="absolute top-[40.7%] left-0 z-[1] grid h-[54%] w-full grid-cols-5 gap-[clamp(0.5rem,1.1vw,0.85rem)] p-2 max-sm:top-[31%] max-sm:h-[34%] max-sm:gap-[0.35rem]"
+          className="absolute top-[40.7%] left-0 z-[1] grid h-[54%] w-full grid-cols-5 gap-[clamp(0.5rem,1.1vw,0.85rem)] p-2 max-sm:top-[36%] max-sm:h-[34%] max-sm:grid-cols-4 max-sm:gap-[0.35rem]"
           aria-hidden="true"
           style={prefersReducedMotion ? undefined : { x: galleryX, y: galleryY, z: -30 }}
         >

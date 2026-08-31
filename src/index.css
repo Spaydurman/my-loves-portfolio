@@ -1,4 +1,9 @@
 @import 'tailwindcss';
+@import '@fontsource/anton';
+
+.hero-title {
+  font-family: 'Anton', Impact, sans-serif;
+}
 
 .hero-shine {
   -webkit-mask-image: url('/hero-images/Hero Picture.png');
