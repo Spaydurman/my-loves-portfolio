@@ -36,14 +36,14 @@ function Hero() {
   const smoothX = useSpring(pointerX, spring)
   const smoothY = useSpring(pointerY, spring)
 
-  const rotateX = useTransform(smoothY, [-1, 1], [6, -6])
-  const rotateY = useTransform(smoothX, [-1, 1], [-8, 8])
-  const titleX = useTransform(smoothX, [-1, 1], [-12, 12])
-  const titleY = useTransform(smoothY, [-1, 1], [-7, 7])
-  const galleryX = useTransform(smoothX, [-1, 1], [-6, 6])
-  const galleryY = useTransform(smoothY, [-1, 1], [-4, 4])
-  const portraitX = useTransform(smoothX, [-1, 1], [-24, 24])
-  const portraitY = useTransform(smoothY, [-1, 1], [-14, 14])
+  const rotateX = useTransform(smoothY, [-1, 1], [4.5, -4.5])
+  const rotateY = useTransform(smoothX, [-1, 1], [-6, 6])
+  const titleX = useTransform(smoothX, [-1, 1], [-8, 8])
+  const titleY = useTransform(smoothY, [-1, 1], [-5, 5])
+  const galleryX = useTransform(smoothX, [-1, 1], [-4, 4])
+  const galleryY = useTransform(smoothY, [-1, 1], [-3, 3])
+  const portraitX = useTransform(smoothX, [-1, 1], [-20, 20])
+  const portraitY = useTransform(smoothY, [-1, 1], [-12, 12])
   const shineX = useTransform(smoothX, [-1, 1], [20, 80])
   const shineY = useTransform(smoothY, [-1, 1], [20, 80])
   const shine = useMotionTemplate`radial-gradient(circle at ${shineX}% ${shineY}%, rgb(255 255 255 / 0.3), transparent 32%)`
@@ -63,7 +63,7 @@ function Hero() {
 
   return (
     <main
-      className="group relative isolate min-h-svh w-full overflow-hidden bg-[#1e321f] [perspective:1200px]"
+      className="group relative isolate min-h-svh w-full overflow-hidden bg-[#1e321f] [perspective:1400px]"
       aria-labelledby="hero-title"
       onPointerMove={handlePointerMove}
       onPointerLeave={resetTilt}
@@ -73,11 +73,11 @@ function Hero() {
         style={prefersReducedMotion ? undefined : { rotateX, rotateY }}
       >
         {/* Foreground: hero picture */}
-        <div className="absolute bottom-[-0.2%] left-1/2 z-[3] h-[74.8%] w-fit -translate-x-1/2 max-sm:h-[63%] max-sm:max-w-[92vw]">
-          <motion.div
-            className="relative h-full [transform-style:preserve-3d]"
-            style={prefersReducedMotion ? undefined : { x: portraitX, y: portraitY, z: 85 }}
-          >
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-[3] [transform-style:preserve-3d]"
+          style={prefersReducedMotion ? undefined : { x: portraitX, y: portraitY, z: 75 }}
+        >
+          <div className="absolute bottom-[-0.2%] left-1/2 h-[74.8%] w-fit -translate-x-1/2 max-sm:h-[63%] max-sm:max-w-[92vw]">
             <img
               className="relative z-[2] block h-full w-auto max-w-[92vw] object-contain object-bottom drop-shadow-[0_1.2rem_1.5rem_rgba(4,17,7,0.28)] select-none"
               src="/hero-images/Hero Picture.png"
@@ -89,25 +89,29 @@ function Hero() {
               style={{ background: shine }}
               aria-hidden="true"
             />
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
         {/* Middle layer: text */}
-        <div className="absolute top-[13.8%] left-1/2 z-[2] w-max -translate-x-1/2 max-sm:top-[12%]">
-          <motion.h1
-            id="hero-title"
-            className="m-0 whitespace-nowrap text-[clamp(7rem,21.1vw,22rem)] leading-[0.78] font-normal tracking-[0] text-[#f4f4f4] [font-family:Impact,Haettenschweiler,'Arial_Narrow_Bold',sans-serif] max-sm:text-[22vw] max-sm:leading-[0.84]"
-            style={prefersReducedMotion ? undefined : { x: titleX, y: titleY, z: 25 }}
-          >
-            NIKKA ELLA
-          </motion.h1>
-        </div>
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-[2] [transform-style:preserve-3d]"
+          style={prefersReducedMotion ? undefined : { x: titleX, y: titleY, z: 15 }}
+        >
+          <div className="absolute top-[13.8%] left-1/2 w-max -translate-x-1/2 max-sm:top-[12%]">
+            <h1
+              id="hero-title"
+              className="m-0 whitespace-nowrap text-[clamp(7rem,21.1vw,22rem)] leading-[0.78] font-normal tracking-[0] text-[#f4f4f4] [font-family:Impact,Haettenschweiler,'Arial_Narrow_Bold',sans-serif] max-sm:text-[22vw] max-sm:leading-[0.84]"
+            >
+              NIKKA ELLA
+            </h1>
+          </div>
+        </motion.div>
 
         {/* Background: four pictures */}
         <motion.div
           className="absolute top-[40.7%] left-0 z-[1] grid h-[54%] w-full grid-cols-5 gap-[clamp(0.5rem,1.1vw,0.85rem)] p-2 max-sm:top-[31%] max-sm:h-[34%] max-sm:gap-[0.35rem]"
           aria-hidden="true"
-          style={prefersReducedMotion ? undefined : { x: galleryX, y: galleryY, z: -35 }}
+          style={prefersReducedMotion ? undefined : { x: galleryX, y: galleryY, z: -30 }}
         >
           {galleryImages.map(({ src, className }) => (
             <img
