@@ -31,7 +31,7 @@ function App() {
       </h1>
 
       <div
-        className="absolute top-[40.7%] left-0 z-[1] grid h-[54%] w-full grid-cols-5 gap-[clamp(0.5rem,1.1vw,0.85rem)] max-sm:top-[31%] max-sm:h-[34%] max-sm:gap-[0.35rem]"
+        className="absolute top-[40.7%] left-0 z-[1] p-2 grid h-[54%] w-full grid-cols-4 gap-[clamp(0.5rem,1.1vw,0.85rem)] max-sm:top-[31%] max-sm:h-[34%] max-sm:gap-[0.35rem]"
         aria-hidden="true"
       >
         {galleryImages.map(({ src, className }) => (
