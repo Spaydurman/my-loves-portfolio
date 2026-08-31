@@ -1,1 +1,12 @@
 @import 'tailwindcss';
+
+.hero-shine {
+  -webkit-mask-image: url('/hero-images/Hero Picture.png');
+  -webkit-mask-position: bottom center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-image: url('/hero-images/Hero Picture.png');
+  mask-position: bottom center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
