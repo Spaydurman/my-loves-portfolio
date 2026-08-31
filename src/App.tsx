@@ -6,6 +6,7 @@ import {
   useSpring,
   useTransform,
 } from 'motion/react'
+import { useEffect, useRef } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
 
 const galleryImages = [
@@ -29,10 +30,24 @@ const galleryImages = [
 
 const spring = { stiffness: 150, damping: 20, mass: 0.55 }
 
+type OrientationEventConstructor = typeof DeviceOrientationEvent & {
+  requestPermission?: () => Promise<'granted' | 'denied'>
+}
+
+function clamp(value: number, min = -1, max = 1) {
+  return Math.min(max, Math.max(min, value))
+}
+
+function shortestAngle(from: number, to: number) {
+  return ((to - from + 540) % 360) - 180
+}
+
 function Hero() {
   const prefersReducedMotion = useReducedMotion()
   const pointerX = useMotionValue(0)
   const pointerY = useMotionValue(0)
+  const usesDeviceTilt = useRef(false)
+  const orientationPermissionRequested = useRef(false)
   const smoothX = useSpring(pointerX, spring)
   const smoothY = useSpring(pointerY, spring)
 
@@ -48,8 +63,79 @@ function Hero() {
   const shineY = useTransform(smoothY, [-1, 1], [20, 80])
   const shine = useMotionTemplate`radial-gradient(circle at ${shineX}% ${shineY}%, rgb(255 255 255 / 0.3), transparent 32%)`
 
+  useEffect(() => {
+    if (prefersReducedMotion) return
+
+    const mobileQuery = window.matchMedia('(hover: none), (pointer: coarse)')
+    usesDeviceTilt.current = mobileQuery.matches
+    if (!mobileQuery.matches) return
+
+    let initialBeta: number | null = null
+    let initialGamma: number | null = null
+
+    function resetOrigin() {
+      initialBeta = null
+      initialGamma = null
+      pointerX.set(0)
+      pointerY.set(0)
+    }
+
+    function handleOrientation(event: DeviceOrientationEvent) {
+      if (event.beta === null || event.gamma === null) return
+
+      initialBeta ??= event.beta
+      initialGamma ??= event.gamma
+
+      const beta = shortestAngle(initialBeta, event.beta)
+      const gamma = shortestAngle(initialGamma, event.gamma)
+      const screenAngle = window.screen.orientation?.angle ?? 0
+
+      if (screenAngle === 90) {
+        pointerX.set(clamp(beta / 25))
+        pointerY.set(clamp(-gamma / 25))
+      } else if (screenAngle === 270) {
+        pointerX.set(clamp(-beta / 25))
+        pointerY.set(clamp(gamma / 25))
+      } else {
+        pointerX.set(clamp(gamma / 25))
+        pointerY.set(clamp(beta / 25))
+      }
+    }
+
+    window.addEventListener('deviceorientation', handleOrientation)
+    window.addEventListener('orientationchange', resetOrigin)
+
+    return () => {
+      window.removeEventListener('deviceorientation', handleOrientation)
+      window.removeEventListener('orientationchange', resetOrigin)
+      usesDeviceTilt.current = false
+    }
+  }, [pointerX, pointerY, prefersReducedMotion])
+
+  async function enableDeviceOrientation(event: ReactPointerEvent<HTMLElement>) {
+    if (
+      event.pointerType !== 'touch' ||
+      !usesDeviceTilt.current ||
+      orientationPermissionRequested.current ||
+      !('DeviceOrientationEvent' in window)
+    ) {
+      return
+    }
+
+    const OrientationEvent = DeviceOrientationEvent as OrientationEventConstructor
+    if (!OrientationEvent.requestPermission) return
+
+    orientationPermissionRequested.current = true
+    try {
+      const permission = await OrientationEvent.requestPermission()
+      if (permission !== 'granted') orientationPermissionRequested.current = false
+    } catch {
+      orientationPermissionRequested.current = false
+    }
+  }
+
   function handlePointerMove(event: ReactPointerEvent<HTMLElement>) {
-    if (prefersReducedMotion || event.pointerType === 'touch') return
+    if (prefersReducedMotion || usesDeviceTilt.current || event.pointerType === 'touch') return
 
     const bounds = event.currentTarget.getBoundingClientRect()
     pointerX.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 2)
@@ -65,6 +151,7 @@ function Hero() {
     <main
       className="group relative isolate min-h-svh w-full overflow-hidden bg-[#1e321f] [perspective:1400px]"
       aria-labelledby="hero-title"
+      onPointerDown={enableDeviceOrientation}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetTilt}
     >
