@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@fontsource/anton": "^5.3.0",
+    "@fontsource/imbue": "^5.3.0",
+    "@fontsource/source-sans-3": "^5.3.0",
     "motion": "^13.1.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"

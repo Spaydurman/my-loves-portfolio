@@ -1,5 +1,27 @@
 @import 'tailwindcss';
 @import '@fontsource/anton';
+@import '@fontsource/imbue/500.css';
+@import '@fontsource/source-sans-3/400.css';
+@import '@fontsource/source-sans-3/700.css';
+
+:root {
+  font-family: 'Source Sans 3', 'Source Sans Pro', Arial, sans-serif;
+  color: #142f1a;
+  background: #1e321f;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #1e321f;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
 
 .hero-title {
   font-family: 'Anton', Impact, sans-serif;
@@ -12,4 +34,18 @@
   mask-position: bottom center;
   mask-repeat: no-repeat;
   mask-size: contain;
+}
+
+.about-title {
+  font-family: 'Imbue', Georgia, serif;
+}
+
+.about-section {
+  font-family: 'Source Sans 3', 'Source Sans Pro', Arial, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
