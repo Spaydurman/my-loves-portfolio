@@ -3,6 +3,7 @@ import { useRef } from 'react'
 
 import GetToKnowMe from './components/GetToKnowMe'
 import Hero from './components/Hero'
+import SocialMediaManager from './components/SocialMediaManager'
 
 function App() {
   const heroScrollArea = useRef<HTMLDivElement>(null)
@@ -28,6 +29,8 @@ function App() {
       <div className="relative z-10 mt-[-24svh]">
         <GetToKnowMe />
       </div>
+
+      <SocialMediaManager />
     </main>
   )
 }

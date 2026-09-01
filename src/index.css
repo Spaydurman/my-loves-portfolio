@@ -44,8 +44,37 @@ body {
   font-family: 'Source Sans 3', 'Source Sans Pro', Arial, sans-serif;
 }
 
+.social-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.social-shimmer::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(
+    105deg,
+    transparent 18%,
+    rgb(255 255 255 / 68%) 42%,
+    transparent 66%
+  );
+  transform: translateX(-120%);
+  animation: social-shimmer 1.55s ease-in-out infinite;
+}
+
+@keyframes social-shimmer {
+  to {
+    transform: translateX(120%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .social-shimmer::after {
+    animation: none;
   }
 }
