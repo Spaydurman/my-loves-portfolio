@@ -6,24 +6,33 @@ import {
   useSpring,
   useTransform,
 } from 'motion/react'
-import { useEffect, useRef } from 'react'
-import type { PointerEvent as ReactPointerEvent } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import type {
+  PointerEvent as ReactPointerEvent,
+  SyntheticEvent,
+} from 'react'
+
+import heroPortrait from './assets/hero-images/Hero Picture.png'
+import galleryImage1 from './assets/hero-images/image (1).jpg'
+import galleryImage2 from './assets/hero-images/image (2).jpg'
+import galleryImage3 from './assets/hero-images/image (3).jpg'
+import galleryImage4 from './assets/hero-images/image (4).jpg'
 
 const galleryImages = [
   {
-    src: '/hero-images/image (1).png',
+    src: galleryImage1,
     className: 'object-[50%_59%]',
   },
   {
-    src: '/hero-images/image (2).png',
+    src: galleryImage2,
     className: 'col-start-2 object-[50%_57%] max-sm:col-start-auto',
   },
   {
-    src: '/hero-images/image (4).png',
+    src: galleryImage4,
     className: 'col-start-4 object-[50%_50%] max-sm:col-start-auto',
   },
   {
-    src: '/hero-images/image (3).png',
+    src: galleryImage3,
     className: 'col-start-5 object-[50%_61%] max-sm:col-start-auto',
   },
 ]
@@ -44,6 +53,8 @@ function shortestAngle(from: number, to: number) {
 
 function Hero() {
   const prefersReducedMotion = useReducedMotion()
+  const [imagesReady, setImagesReady] = useState(false)
+  const finishedImages = useRef(new Set<string>())
   const pointerX = useMotionValue(0)
   const pointerY = useMotionValue(0)
   const usesDeviceTilt = useRef(false)
@@ -156,6 +167,28 @@ function Hero() {
     pointerY.set(0)
   }
 
+  async function markImageReady(event: SyntheticEvent<HTMLImageElement>) {
+    const image = event.currentTarget
+
+    try {
+      await image.decode()
+    } catch {
+      // A completed load is still safe to display if decode() is unavailable.
+    }
+
+    finishedImages.current.add(image.currentSrc || image.src)
+    if (finishedImages.current.size === galleryImages.length + 1) {
+      setImagesReady(true)
+    }
+  }
+
+  function markImageFinished(event: SyntheticEvent<HTMLImageElement>) {
+    finishedImages.current.add(event.currentTarget.currentSrc || event.currentTarget.src)
+    if (finishedImages.current.size === galleryImages.length + 1) {
+      setImagesReady(true)
+    }
+  }
+
   return (
     <main
       className="group relative isolate min-h-svh w-full overflow-hidden bg-[#1e321f] [perspective:1400px]"
@@ -163,9 +196,13 @@ function Hero() {
       onPointerDown={enableDeviceOrientation}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetTilt}
+      aria-busy={!imagesReady}
     >
       <motion.div
         className="absolute inset-0 [transform-style:preserve-3d]"
+        initial={false}
+        animate={{ opacity: imagesReady ? 1 : 0 }}
+        transition={{ duration: 0 }}
         style={prefersReducedMotion ? undefined : { rotateX, rotateY }}
       >
         {/* Foreground: hero picture */}
@@ -186,13 +223,22 @@ function Hero() {
           <div className="absolute bottom-[-0.2%] left-1/2 h-[74.8%] w-fit -translate-x-1/2 max-sm:h-[63%] max-sm:max-w-[92vw]">
             <img
               className="relative z-[2] block h-full w-auto max-w-[92vw] object-contain object-bottom drop-shadow-[0_1.2rem_1.5rem_rgba(4,17,7,0.28)] select-none"
-              src="/hero-images/Hero Picture.png"
+              src={heroPortrait}
               alt="Nikka Ella wearing black sunglasses and a white top"
               draggable="false"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              onLoad={markImageReady}
+              onError={markImageFinished}
             />
             <motion.span
               className="hero-shine pointer-events-none absolute inset-0 z-[3] opacity-0 mix-blend-soft-light transition-opacity duration-200 group-hover:opacity-100 motion-reduce:hidden"
-              style={{ background: shine }}
+              style={{
+                background: shine,
+                WebkitMaskImage: `url("${heroPortrait}")`,
+                maskImage: `url("${heroPortrait}")`,
+              }}
               aria-hidden="true"
             />
           </div>
@@ -246,6 +292,11 @@ function Hero() {
               src={src}
               alt=""
               key={src}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              onLoad={markImageReady}
+              onError={markImageFinished}
             />
           ))}
         </motion.div>
