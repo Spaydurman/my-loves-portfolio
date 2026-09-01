@@ -95,8 +95,8 @@ export default function GetToKnowMe() {
       viewport={{ once: true, amount: 0.08 }}
       transition={{ type: 'spring', stiffness: 72, damping: 20, mass: 0.9 }}
     >
-      <div className="relative mx-auto grid min-h-svh w-full max-w-[100rem] grid-cols-[minmax(0,0.96fr)_minmax(29rem,1.04fr)] max-lg:grid-cols-1 max-lg:grid-rows-[auto_minmax(24rem,52svh)]">
-        <div className="relative z-10 flex items-center px-[clamp(1.5rem,5.7vw,5.7rem)] py-24 max-lg:items-start max-lg:pb-4 max-sm:pt-20">
+      <div className="relative mx-auto grid min-h-svh w-full max-w-[100rem] grid-cols-[minmax(0,0.96fr)_minmax(29rem,1.04fr)] max-lg:grid-cols-1 max-lg:grid-rows-[minmax(32rem,72svh)_auto]">
+        <div className="relative z-10 flex items-center px-[clamp(1.5rem,5.7vw,5.7rem)] py-24 max-lg:order-2 max-lg:items-start max-lg:py-16">
           <div className="max-w-[45rem]">
             <TypedText
               as="h2"
@@ -119,7 +119,7 @@ export default function GetToKnowMe() {
         </div>
 
         <motion.div
-          className="relative min-h-[36rem] max-lg:min-h-0"
+          className="relative min-h-[36rem] max-lg:order-1 max-lg:min-h-0 max-lg:overflow-hidden"
           initial={prefersReducedMotion ? false : { opacity: 0, x: 80, scale: 1.04 }}
           whileInView={{ opacity: 1, x: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.15 }}
@@ -129,7 +129,7 @@ export default function GetToKnowMe() {
           <img
             src={aboutPortrait}
             alt="Nikka Ella seated in a white blouse"
-            className="absolute inset-x-0 bottom-0 ml-auto h-[98%] w-auto max-w-none object-contain object-bottom max-lg:right-[-3%] max-lg:h-[112%] max-sm:right-[-18%] max-sm:h-[105%]"
+            className="absolute inset-y-0 right-0 h-full w-auto max-w-none object-contain object-bottom max-lg:left-1/2 max-lg:right-auto max-lg:-translate-x-1/2 max-lg:object-top"
             loading="lazy"
             decoding="async"
           />
