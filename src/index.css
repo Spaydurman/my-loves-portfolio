@@ -53,15 +53,24 @@ body {
   position: absolute;
   inset: 13% 0 20%;
   perspective: 75rem;
-  perspective-origin: 50% 46%;
+  perspective-origin: 50% 100%;
   transform-style: preserve-3d;
+}
+
+.social-phone-stage:focus-visible {
+  outline: 2px solid rgb(248 214 67 / 85%);
+  outline-offset: 0.25rem;
+}
+
+.social-phone-track {
+  display: contents;
 }
 
 .social-phone {
   position: absolute;
   bottom: 0;
-  left: 50%;
-  width: min(14.5vw, 27svh, 16.25rem);
+  aspect-ratio: 9 / 19.25;
+  width: min(12.75vw, 25svh, 14.25rem);
   transform-origin: bottom center;
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -69,27 +78,32 @@ body {
 
 .social-phone--far-left {
   z-index: 1;
-  transform: translate3d(-205%, 0, -4.5rem) rotateY(-28deg) scale(0.96);
+  left: 12%;
+  transform: translateX(-50%) rotateY(48deg);
 }
 
 .social-phone--left {
   z-index: 2;
-  transform: translate3d(-124%, 0, -1.5rem) rotateY(-14deg) scale(0.985);
+  left: 31%;
+  transform: translateX(-50%) rotateY(26deg);
 }
 
 .social-phone--center {
   z-index: 5;
-  transform: translate3d(-50%, 0, 1.75rem) scale(1.04);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .social-phone--right {
   z-index: 2;
-  transform: translate3d(24%, 0, -1.5rem) rotateY(14deg) scale(0.985);
+  left: 69%;
+  transform: translateX(-50%) rotateY(-26deg);
 }
 
 .social-phone--far-right {
   z-index: 1;
-  transform: translate3d(105%, 0, -4.5rem) rotateY(28deg) scale(0.96);
+  left: 88%;
+  transform: translateX(-50%) rotateY(-48deg);
 }
 
 .social-skeleton-block {
@@ -142,6 +156,11 @@ body {
 
 .social-arrow {
   position: absolute;
+  display: block;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
 }
 
 .social-arrow--engagement {
@@ -154,14 +173,14 @@ body {
   bottom: calc(100% - 0.25rem);
   left: 50%;
   width: clamp(7.5rem, 10vw, 10.5rem);
-  transform: translateX(-50%);
+  transform: translateX(-50%) rotate(135deg);
 }
 
 .social-arrow--followers {
   top: calc(100% - 0.2rem);
   left: 50%;
   width: clamp(7.5rem, 10vw, 10.5rem);
-  transform: translateX(-50%);
+  transform: translateX(-50%) rotate(-45deg);
 }
 
 .social-manager-title {
@@ -191,23 +210,32 @@ body {
   }
 
   .social-phone {
-    width: min(20vw, 24svh, 10.75rem);
+    width: min(17vw, 23svh, 9.5rem);
   }
 
   .social-phone--far-left {
-    transform: translate3d(-192%, 0, -3rem) rotateY(-24deg) scale(0.95);
+    left: 12%;
+    transform: translateX(-50%) rotateY(44deg);
   }
 
   .social-phone--left {
-    transform: translate3d(-122%, 0, -1rem) rotateY(-12deg) scale(0.98);
+    left: 31%;
+    transform: translateX(-50%) rotateY(24deg);
+  }
+
+  .social-phone--center {
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .social-phone--right {
-    transform: translate3d(22%, 0, -1rem) rotateY(12deg) scale(0.98);
+    left: 69%;
+    transform: translateX(-50%) rotateY(-24deg);
   }
 
   .social-phone--far-right {
-    transform: translate3d(92%, 0, -3rem) rotateY(24deg) scale(0.95);
+    left: 88%;
+    transform: translateX(-50%) rotateY(-44deg);
   }
 
   .social-stat--engagement {
@@ -244,31 +272,57 @@ body {
   }
 
   .social-phone-stage {
-    inset: 27% -1rem 27%;
+    inset: 24% -1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    perspective-origin: 50% 100%;
+    scroll-padding-inline: calc((100vw - 8rem) / 2);
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .social-phone-stage::-webkit-scrollbar {
+    display: none;
+  }
+
+  .social-phone-track {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    width: max-content;
+    height: 100%;
+    padding-inline: calc((100vw - 8rem) / 2);
   }
 
   .social-phone {
-    width: min(29vw, 20svh, 8rem);
+    position: relative;
+    bottom: auto;
+    left: auto;
+    flex: 0 0 8rem;
+    width: 8rem;
+    scroll-snap-align: center;
   }
 
   .social-phone--far-left {
-    transform: translate3d(-176%, 0, -2rem) rotateY(-22deg) scale(0.93);
+    transform: rotateY(40deg);
   }
 
   .social-phone--left {
-    transform: translate3d(-112%, 0, -0.75rem) rotateY(-11deg) scale(0.975);
+    transform: rotateY(22deg);
   }
 
   .social-phone--center {
-    transform: translate3d(-50%, 0, 1rem) scale(1.03);
+    transform: none;
   }
 
   .social-phone--right {
-    transform: translate3d(12%, 0, -0.75rem) rotateY(11deg) scale(0.975);
+    transform: rotateY(-22deg);
   }
 
   .social-phone--far-right {
-    transform: translate3d(76%, 0, -2rem) rotateY(22deg) scale(0.93);
+    transform: rotateY(-40deg);
   }
 
   .social-stat {

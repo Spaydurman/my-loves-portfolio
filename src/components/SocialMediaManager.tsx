@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 
+import arrowImage from '../assets/social-media-manager/arrow.png'
 import IPhoneDevice from './ui/IPhoneDevice'
-import SketchArrow from './ui/SketchArrow'
 import SocialSkeletonScreen from './ui/SocialSkeletonScreen'
 
 const phones = [
@@ -31,7 +31,7 @@ export default function SocialMediaManager() {
         className="social-manager-canvas relative mx-auto max-w-[88rem]"
       >
         <div className="social-stat social-stat--engagement">
-          <SketchArrow className="social-arrow social-arrow--engagement text-white/90" />
+          <img src={arrowImage} alt="" aria-hidden="true" className="social-arrow social-arrow--engagement" />
           <p>
             Increased Facebook engagement by <strong>154.4%</strong> in one year, generating{' '}
             <strong>459,158</strong> total engagements.
@@ -39,28 +39,36 @@ export default function SocialMediaManager() {
         </div>
 
         <div className="social-stat social-stat--visits">
-          <SketchArrow variant="down" className="social-arrow social-arrow--visits text-white/90" />
+          <img src={arrowImage} alt="" aria-hidden="true" className="social-arrow social-arrow--visits" />
           <p>
             Drove <strong>972,585</strong> Facebook page visits, representing a <strong>74.04%</strong>{' '}
             increase from the previous year.
           </p>
         </div>
 
-        <div className="social-phone-stage" aria-label="Five social media project placeholders">
-          {phones.map((phone, index) => (
-            <div key={phone.label} className={phone.className}>
-              <motion.div
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 70 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.75, delay: 0.08 + index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <IPhoneDevice label={phone.label} className="max-w-none">
-                  <SocialSkeletonScreen variant={index} />
-                </IPhoneDevice>
-              </motion.div>
-            </div>
-          ))}
+        <div
+          className="social-phone-stage"
+          role="region"
+          aria-label="Swipe horizontally to view five social media project placeholders"
+          tabIndex={0}
+        >
+          <div className="social-phone-track">
+            {phones.map((phone, index) => (
+              <div key={phone.label} className={phone.className}>
+                <motion.div
+                  initial={prefersReducedMotion ? false : { opacity: 0, y: 70 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.75, delay: 0.08 + index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  className="h-full"
+                >
+                  <IPhoneDevice label={phone.label} className="h-full max-w-none">
+                    <SocialSkeletonScreen variant={index} />
+                  </IPhoneDevice>
+                </motion.div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="social-stat social-stat--followers">
@@ -69,7 +77,7 @@ export default function SocialMediaManager() {
             <br />
             within one year.
           </p>
-          <SketchArrow variant="up" className="social-arrow social-arrow--followers text-white/90" />
+          <img src={arrowImage} alt="" aria-hidden="true" className="social-arrow social-arrow--followers" />
         </div>
 
         <h2 id="social-media-title" className="social-manager-title about-title">
