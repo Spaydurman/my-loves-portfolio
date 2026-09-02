@@ -44,28 +44,269 @@ body {
   font-family: 'Source Sans 3', 'Source Sans Pro', Arial, sans-serif;
 }
 
-.social-shimmer {
-  position: relative;
-  overflow: hidden;
+.social-manager-canvas {
+  height: calc(100svh - 5rem);
+  min-height: 34rem;
 }
 
-.social-shimmer::after {
+.social-phone-stage {
+  position: absolute;
+  inset: 13% 0 20%;
+  perspective: 75rem;
+  perspective-origin: 50% 46%;
+  transform-style: preserve-3d;
+}
+
+.social-phone {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: min(14.5vw, 27svh, 16.25rem);
+  transform-origin: bottom center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.social-phone--far-left {
+  z-index: 1;
+  transform: translate3d(-205%, 0, -4.5rem) rotateY(-28deg) scale(0.96);
+}
+
+.social-phone--left {
+  z-index: 2;
+  transform: translate3d(-124%, 0, -1.5rem) rotateY(-14deg) scale(0.985);
+}
+
+.social-phone--center {
+  z-index: 5;
+  transform: translate3d(-50%, 0, 1.75rem) scale(1.04);
+}
+
+.social-phone--right {
+  z-index: 2;
+  transform: translate3d(24%, 0, -1.5rem) rotateY(14deg) scale(0.985);
+}
+
+.social-phone--far-right {
+  z-index: 1;
+  transform: translate3d(105%, 0, -4.5rem) rotateY(28deg) scale(0.96);
+}
+
+.social-skeleton-block {
+  position: relative;
+  overflow: hidden;
+  background: #252a27;
+}
+
+.social-skeleton-block::after {
   position: absolute;
   inset: 0;
   content: '';
-  background: linear-gradient(
-    105deg,
-    transparent 18%,
-    rgb(255 255 255 / 68%) 42%,
-    transparent 66%
-  );
-  transform: translateX(-120%);
-  animation: social-shimmer 1.55s ease-in-out infinite;
+  background: linear-gradient(105deg, transparent 18%, rgb(255 255 255 / 12%) 45%, transparent 72%);
+  transform: translateX(-130%);
+  animation: social-skeleton-shimmer 1.7s ease-in-out infinite;
 }
 
-@keyframes social-shimmer {
+.social-stat {
+  position: absolute;
+  z-index: 10;
+  font-size: clamp(0.75rem, 1.08vw, 1rem);
+  font-weight: 700;
+  line-height: 1.42;
+}
+
+.social-stat strong {
+  font-weight: 700;
+}
+
+.social-stat--engagement {
+  top: 1%;
+  left: 12%;
+  width: min(25rem, 32%);
+  text-align: left;
+}
+
+.social-stat--visits {
+  top: 23%;
+  right: 0;
+  width: min(13.5rem, 17%);
+  text-align: center;
+}
+
+.social-stat--followers {
+  bottom: 14%;
+  left: 0;
+  width: min(22rem, 27%);
+  text-align: center;
+}
+
+.social-arrow {
+  position: absolute;
+}
+
+.social-arrow--engagement {
+  top: -0.2rem;
+  right: calc(100% - 0.45rem);
+  width: clamp(6.5rem, 9vw, 9.5rem);
+}
+
+.social-arrow--visits {
+  bottom: calc(100% - 0.25rem);
+  left: 50%;
+  width: clamp(7.5rem, 10vw, 10.5rem);
+  transform: translateX(-50%);
+}
+
+.social-arrow--followers {
+  top: calc(100% - 0.2rem);
+  left: 50%;
+  width: clamp(7.5rem, 10vw, 10.5rem);
+  transform: translateX(-50%);
+}
+
+.social-manager-title {
+  position: absolute;
+  z-index: 10;
+  bottom: 1%;
+  left: 50%;
+  width: max-content;
+  max-width: 66%;
+  transform: translateX(-50%);
+  font-size: min(6.6vw, 6.6rem);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-align: center;
+}
+
+@keyframes social-skeleton-shimmer {
   to {
-    transform: translateX(120%);
+    transform: translateX(130%);
+  }
+}
+
+@media (max-width: 900px) {
+  .social-phone-stage {
+    inset: 20% 0 25%;
+  }
+
+  .social-phone {
+    width: min(20vw, 24svh, 10.75rem);
+  }
+
+  .social-phone--far-left {
+    transform: translate3d(-192%, 0, -3rem) rotateY(-24deg) scale(0.95);
+  }
+
+  .social-phone--left {
+    transform: translate3d(-122%, 0, -1rem) rotateY(-12deg) scale(0.98);
+  }
+
+  .social-phone--right {
+    transform: translate3d(22%, 0, -1rem) rotateY(12deg) scale(0.98);
+  }
+
+  .social-phone--far-right {
+    transform: translate3d(92%, 0, -3rem) rotateY(24deg) scale(0.95);
+  }
+
+  .social-stat--engagement {
+    left: 16%;
+    width: 48%;
+  }
+
+  .social-stat--visits {
+    top: 13%;
+    width: 28%;
+  }
+
+  .social-stat--followers {
+    bottom: 15%;
+    width: 35%;
+  }
+
+  .social-manager-title {
+    bottom: 1%;
+    max-width: 76%;
+    font-size: clamp(3.6rem, 10vw, 5.5rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .social-manager {
+    padding-inline: 1rem;
+    padding-block: 1.5rem;
+  }
+
+  .social-manager-canvas {
+    height: calc(100svh - 3rem);
+    min-height: 35rem;
+  }
+
+  .social-phone-stage {
+    inset: 27% -1rem 27%;
+  }
+
+  .social-phone {
+    width: min(29vw, 20svh, 8rem);
+  }
+
+  .social-phone--far-left {
+    transform: translate3d(-176%, 0, -2rem) rotateY(-22deg) scale(0.93);
+  }
+
+  .social-phone--left {
+    transform: translate3d(-112%, 0, -0.75rem) rotateY(-11deg) scale(0.975);
+  }
+
+  .social-phone--center {
+    transform: translate3d(-50%, 0, 1rem) scale(1.03);
+  }
+
+  .social-phone--right {
+    transform: translate3d(12%, 0, -0.75rem) rotateY(11deg) scale(0.975);
+  }
+
+  .social-phone--far-right {
+    transform: translate3d(76%, 0, -2rem) rotateY(22deg) scale(0.93);
+  }
+
+  .social-stat {
+    font-size: clamp(0.65rem, 2.9vw, 0.78rem);
+  }
+
+  .social-stat--engagement {
+    top: 0;
+    left: 24%;
+    width: 72%;
+  }
+
+  .social-stat--visits {
+    top: 14%;
+    right: 0;
+    width: 47%;
+  }
+
+  .social-stat--followers {
+    bottom: 17%;
+    width: 55%;
+  }
+
+  .social-arrow--engagement {
+    right: calc(100% - 0.25rem);
+    width: 5.25rem;
+  }
+
+  .social-arrow--visits,
+  .social-arrow--followers {
+    width: 6.5rem;
+  }
+
+  .social-manager-title {
+    bottom: 1%;
+    width: 100%;
+    max-width: 100%;
+    font-size: clamp(3.2rem, 14.5vw, 4.8rem);
   }
 }
 
@@ -74,7 +315,7 @@ body {
     scroll-behavior: auto;
   }
 
-  .social-shimmer::after {
+  .social-skeleton-block::after {
     animation: none;
   }
 }
