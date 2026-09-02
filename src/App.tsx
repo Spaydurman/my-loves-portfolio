@@ -86,8 +86,10 @@ function App() {
         </motion.div>
       </div>
 
-      <div className="relative z-10 mt-[-24svh]">
-        <GetToKnowMe />
+      <div className="relative z-10 mt-[-24svh] bg-[#f1f0ed] lg:h-[190svh]">
+        <div className="lg:sticky lg:top-0 lg:h-svh lg:overflow-hidden">
+          <GetToKnowMe />
+        </div>
       </div>
 
       <SocialMediaReveal />

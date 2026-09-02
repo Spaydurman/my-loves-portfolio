@@ -88,7 +88,7 @@ export default function GetToKnowMe() {
   return (
     <motion.section
       id="about"
-      className="about-section relative z-10 min-h-svh overflow-hidden bg-[#f1f0ed] text-[#142f1a] shadow-[0_-2rem_5rem_rgba(3,16,7,0.18)]"
+      className="about-section relative z-10 min-h-svh overflow-hidden bg-[#f1f0ed] text-[#142f1a]"
       aria-labelledby="about-title"
       initial={prefersReducedMotion ? false : { y: 80, borderRadius: '2rem 2rem 0 0' }}
       whileInView={{ y: 0, borderRadius: '0rem 0rem 0 0' }}
