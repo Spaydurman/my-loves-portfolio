@@ -1,9 +1,69 @@
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { useRef } from 'react'
+import {
+  motion,
+  useMotionTemplate,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
 
 import GetToKnowMe from './components/GetToKnowMe'
 import Hero from './components/Hero'
 import SocialMediaManager from './components/SocialMediaManager'
+
+function SocialMediaReveal() {
+  const revealArea = useRef<HTMLDivElement>(null)
+  const prefersReducedMotion = useReducedMotion()
+  const [viewport, setViewport] = useState(() => ({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  }))
+  const { scrollYProgress } = useScroll({
+    target: revealArea,
+    offset: ['start start', 'end end'],
+  })
+
+  useEffect(() => {
+    const updateViewport = () => {
+      setViewport({ width: window.innerWidth, height: window.innerHeight })
+    }
+
+    window.addEventListener('resize', updateViewport)
+    return () => window.removeEventListener('resize', updateViewport)
+  }, [])
+
+  const startingSquare = Math.min(128, Math.max(88, Math.min(viewport.width, viewport.height) * 0.12))
+  const verticalInset = useTransform(
+    scrollYProgress,
+    [0, 0.82, 1],
+    [Math.max(0, (viewport.height - startingSquare) / 2), 0, 0],
+  )
+  const horizontalInset = useTransform(
+    scrollYProgress,
+    [0, 0.82, 1],
+    [Math.max(0, (viewport.width - startingSquare) / 2), 0, 0],
+  )
+  const cornerRadius = useTransform(scrollYProgress, [0, 0.7, 0.82], [16, 10, 0])
+  const contentScale = useTransform(scrollYProgress, [0, 0.82], [1.035, 1])
+  const clipPath = useMotionTemplate`inset(${verticalInset}px ${horizontalInset}px round ${cornerRadius}px)`
+
+  if (prefersReducedMotion) {
+    return <SocialMediaManager />
+  }
+
+  return (
+    <div ref={revealArea} className="relative h-[200svh] bg-[#f1f0ed]">
+      <div className="sticky top-0 h-svh overflow-hidden">
+        <motion.div
+          className="h-full origin-center will-change-transform"
+          style={{ clipPath, scale: contentScale }}
+        >
+          <SocialMediaManager />
+        </motion.div>
+      </div>
+    </div>
+  )
+}
 
 function App() {
   const heroScrollArea = useRef<HTMLDivElement>(null)
@@ -30,7 +90,7 @@ function App() {
         <GetToKnowMe />
       </div>
 
-      <SocialMediaManager />
+      <SocialMediaReveal />
     </main>
   )
 }
