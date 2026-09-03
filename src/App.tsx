@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react'
 import GetToKnowMe from './components/GetToKnowMe'
 import Hero from './components/Hero'
 import CampaignEvents from './components/CampaignEvents'
+import CampaignResults from './components/CampaignResults'
 import SocialMediaManager from './components/SocialMediaManager'
 
 function SocialMediaReveal() {
@@ -95,6 +96,7 @@ function App() {
 
       <SocialMediaReveal />
       <CampaignEvents />
+      <CampaignResults />
     </main>
   )
 }
