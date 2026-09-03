@@ -401,6 +401,18 @@ body {
   text-align: center;
 }
 
+.campaign-events__services {
+  width: min(100% - 2rem, 88rem);
+  margin: clamp(1.25rem, 3vw, 2.5rem) auto 0;
+  color: var(--campaign-accent);
+  font-family: 'Imbue', Georgia, serif;
+  font-size: clamp(1.05rem, 1.45vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.55;
+  text-align: center;
+  text-wrap: balance;
+}
+
 @keyframes social-skeleton-shimmer {
   to {
     transform: translateX(130%);
@@ -596,6 +608,12 @@ body {
 
   .campaign-event-card {
     top: 0.75rem;
+  }
+
+  .campaign-events__services {
+    width: calc(100% - 2rem);
+    margin-top: 1rem;
+    font-size: 1rem;
   }
 }
 

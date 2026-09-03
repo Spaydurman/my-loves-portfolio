@@ -161,6 +161,11 @@ export default function CampaignEvents() {
           aria-hidden="true"
         />
       </div>
+
+      <p className="campaign-events__services">
+        Campaign Planning&nbsp; · &nbsp;Social Media Promotion&nbsp; · &nbsp;Creative Content&nbsp; ·
+        &nbsp;Audience Communication&nbsp; · &nbsp;Event Coordination&nbsp; · &nbsp;Performance Tracking
+      </p>
     </section>
   )
 }
